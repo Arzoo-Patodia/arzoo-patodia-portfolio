@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/arzoo_patodia.html" },
+    { "source": "/arzoo_patodia", "destination": "/arzoo_patodia.html" },
+    { "source": "/career_counselling", "destination": "/arzoo_patodia.html" },
+    { "source": "/resume_overview", "destination": "/resume_overview.html" },
+    { "source": "/mock_interview", "destination": "/mock_interview.html" },
+    { "source": "/career_counselling_service", "destination": "/career_counselling_service.html" },
+    { "source": "/project_guidance", "destination": "/project_guidance.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
+    }
+  ]
+}

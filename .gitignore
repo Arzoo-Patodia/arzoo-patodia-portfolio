@@ -1,0 +1,18 @@
+# Python files
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# System / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local server log files
+.system_generated/
+*.log
