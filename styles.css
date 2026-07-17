@@ -147,21 +147,25 @@ button {
     position: relative;
     display: inline-block;
     margin-bottom: var(--space-lg);
+    width: 140px;
+    height: 140px;
+    border-radius: 16px;
+    overflow: hidden; /* Clips the zoomed image */
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow: var(--shadow-md);
 }
 
 .hero__avatar {
-    width: 140px;
-    height: 140px;
-    border-radius: 16px; /* Rounded square like Topmate */
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    box-shadow: var(--shadow-md);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    transform: scale(1.65); /* Focus on face of Profile_pic.png */
+    transform-origin: 50% 18%; /* Focus on head area */
+    transition: transform var(--transition-normal);
 }
 
-.hero__avatar:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 30px rgba(108, 99, 255, 0.25);
+.hero__avatar-wrapper:hover .hero__avatar {
+    transform: scale(1.8);
 }
 
 .hero__status {
