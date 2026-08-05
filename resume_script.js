@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Month Navigation Listeners
     if (prevMonthBtn) {
-        prevMonthBtn.addEventListener('click', () => {
+        prevMonthBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             if (activeYear > realYear || (activeYear === realYear && activeMonth > realMonth)) {
                 activeMonth--;
                 if (activeMonth < 0) {
@@ -60,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (nextMonthBtn) {
-        nextMonthBtn.addEventListener('click', () => {
+        nextMonthBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             activeMonth++;
             if (activeMonth > 11) {
                 activeMonth = 0;
@@ -107,8 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Days of current month
+        let autoSelectedCell = null;
+        let autoSelectedDay = null;
+
         for (let day = 1; day <= daysInMonth; day++) {
-            const cell = document.createElement('div');
+            const cell = document.createElement('button');
+            cell.type = 'button';
             cell.className = 'day-cell';
             cell.textContent = day;
 
@@ -124,20 +130,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (isFutureOrToday) {
                 cell.classList.add('available');
+                
                 if (year === realYear && month === realMonth && day === realToday) {
                     cell.classList.add('today');
                 }
+
+                if (bookingData.date === day && activeMonth === month && activeYear === year) {
+                    cell.classList.add('selected');
+                }
                 
-                cell.addEventListener('click', () => {
+                cell.addEventListener('click', (e) => {
+                    e.preventDefault();
                     document.querySelectorAll('.day-cell.selected').forEach(el => {
                         el.classList.remove('selected');
                     });
                     cell.classList.add('selected');
                     selectDate(day);
                 });
+
+                if (!autoSelectedCell && (year === realYear && month === realMonth ? day === realToday : day === 1)) {
+                    autoSelectedCell = cell;
+                    autoSelectedDay = day;
+                }
+            } else {
+                cell.disabled = true;
             }
             
             calendarGrid.appendChild(cell);
+        }
+
+        // Auto-select initial day & slot on page load if none selected yet
+        if (!bookingData.date && autoSelectedCell && autoSelectedDay) {
+            autoSelectedCell.classList.add('selected');
+            selectDate(autoSelectedDay);
         }
     }
 
@@ -162,7 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.className = 'slot-btn';
             btn.textContent = slot;
             
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
                 document.querySelectorAll('.slot-btn.selected').forEach(el => {
                     el.classList.remove('selected');
                 });
@@ -182,7 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show slots section
         slotsSection.classList.add('active');
         slotsSection.style.display = 'block';
-        slotsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     // Available Time Slots for each day

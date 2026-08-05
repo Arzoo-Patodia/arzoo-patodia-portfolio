@@ -470,9 +470,19 @@ a {
     font-weight: 500;
     color: var(--clr-text-muted);
     border-radius: var(--radius-full);
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    width: 100%;
     cursor: not-allowed;
     user-select: none;
     transition: all var(--transition-fast);
+}
+
+.day-cell:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    background: transparent;
 }
 
 .day-cell.available {
