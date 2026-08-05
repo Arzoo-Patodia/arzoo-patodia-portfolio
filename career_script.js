@@ -166,14 +166,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initial render
-    renderCalendar(activeYear, activeMonth);
-
     // Available Time Slots for 30 min counselling session
     const availableSlots = [
         "09:00 AM", "09:45 AM", "10:30 AM", "11:15 AM",
         "02:00 PM", "02:45 PM", "04:00 PM", "05:00 PM"
     ];
+
+    // Initial render
+    renderCalendar(activeYear, activeMonth);
 
     // Handle Date Selection
     function selectDate(day) {

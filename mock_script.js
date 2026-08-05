@@ -166,13 +166,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Available Time Slots for 60 mins interview
+    const availableSlots = [
+        "10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM"
+    ];
+
     // Initial render
     renderCalendar(activeYear, activeMonth);
-
-    // Available Time Slots
-    const availableSlots = [
-        "10:00 AM", "11:30 AM", "02:00 PM", "04:00 PM", "06:00 PM"
-    ];
 
     // Handle Date Selection
     function selectDate(day) {
@@ -208,45 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show slots section
         slotsSection.classList.add('active');
         slotsSection.style.display = 'block';
-    }
-
-    // Available Time Slots for 60 mins interview (separated by 1h 30m to make realistic)
-    const availableSlots = [
-        "10:00 AM", "11:30 AM", "02:00 PM", "03:30 PM", "05:00 PM"
-    ];
-
-    // Handle Date Selection
-    function selectDate(day) {
-        bookingData.date = day;
-        bookingData.time = null; // reset selected time
-        
-        actionBtn.disabled = true;
-        actionBtn.innerHTML = 'Select a time slot <i data-lucide="arrow-right"></i>';
-        lucide.createIcons();
-
-        // Render slots
-        slotsGrid.innerHTML = '';
-        availableSlots.forEach(slot => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'slot-btn';
-            btn.textContent = slot;
-            
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.slot-btn.selected').forEach(el => {
-                    el.classList.remove('selected');
-                });
-                btn.classList.add('selected');
-                selectTime(slot);
-            });
-
-            slotsGrid.appendChild(btn);
-        });
-
-        // Show slots section
-        slotsSection.classList.add('active');
-        slotsSection.style.display = 'block';
-        slotsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     // Handle Time Selection

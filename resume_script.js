@@ -166,13 +166,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Available Time Slots for resume review
+    const availableSlots = [
+        "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", 
+        "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM"
+    ];
+
     // Initial render
     renderCalendar(activeYear, activeMonth);
-
-    // Available Time Slots
-    const availableSlots = [
-        "10:00 AM", "11:30 AM", "02:00 PM", "04:00 PM", "06:00 PM"
-    ];
 
     // Handle Date Selection
     function selectDate(day) {
@@ -208,46 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show slots section
         slotsSection.classList.add('active');
         slotsSection.style.display = 'block';
-    }
-
-    // Available Time Slots for each day
-    const availableSlots = [
-        "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", 
-        "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM"
-    ];
-
-    // Handle Date Selection
-    function selectDate(day) {
-        bookingData.date = day;
-        bookingData.time = null; // reset selected time
-        
-        // Hide/disable booking buttons until slot is picked
-        actionBtn.disabled = true;
-        actionBtn.innerHTML = 'Select a time slot <i data-lucide="arrow-right"></i>';
-        lucide.createIcons();
-
-        // Render slots
-        slotsGrid.innerHTML = '';
-        availableSlots.forEach(slot => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'slot-btn';
-            btn.textContent = slot;
-            
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.slot-btn.selected').forEach(el => {
-                    el.classList.remove('selected');
-                });
-                btn.classList.add('selected');
-                selectTime(slot);
-            });
-
-            slotsGrid.appendChild(btn);
-        });
-
-        // Show slots section
-        slotsSection.classList.add('active');
-        slotsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     // Handle Time Selection
@@ -418,6 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 time: timeStr,
                 google_meet_link: meetUrl
             })
+        }).catch(err => console.log('Formspree note:', err));
     }
 
     // plain JS Confetti explosion
