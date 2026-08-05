@@ -31,6 +31,10 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="service_styles.css">
+
+    <!-- PDF.js for ATS Resume Text Extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
     <!-- Icons (Lucide via CDN — lightweight SVG icon set) -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
@@ -189,11 +193,27 @@
                         <span class="service-card__arrow"><i data-lucide="chevron-right"></i></span>
                     </a>
 
+                    <!-- Card 5 (ATS Score Reviewer Tool) -->
+                    <a href="/ats_score_checker" class="service-card" id="service-ats-checker">
+                        <div class="service-card__icon" style="background: rgba(16, 185, 129, 0.12); color: #10b981;">
+                            <i data-lucide="calculator"></i>
+                        </div>
+                        <div class="service-card__body">
+                            <div class="service-card__title">Review ATS Score</div>
+                            <div class="service-card__desc">Free AI analysis of your resume ATS score & keyword match</div>
+                        </div>
+                        <div class="service-card__meta">
+                            <span class="service-card__price" style="color: #10b981; font-weight:700;">FREE</span>
+                            <span class="service-card__badge" style="background:#e6f4ea; color:#137333;">New Tool</span>
+                        </div>
+                        <span class="service-card__arrow"><i data-lucide="chevron-right"></i></span>
+                    </a>
+
                 </div>
             </section>
 
             <!-- CTA -->
-            <section class="reveal" style="text-align: center; margin-bottom: var(--space-2xl);">
+            <section class="reveal" style="text-align: center; margin-top: var(--space-xl); margin-bottom: var(--space-2xl);">
                 <a href="mailto:patodiaarzoo8@gmail.com" class="cta-btn" id="cta-connect">
                     <i data-lucide="sparkles" style="width:18px;height:18px;"></i>
                     Let's Connect

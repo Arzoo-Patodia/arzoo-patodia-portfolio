@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>Free ATS Resume Score Checker | Arzoo Patodia</title>
+    <meta name="description" content="Free online ATS Resume Score Calculator. Test your resume compatibility for Embedded Systems, Automotive ECU, Cybersecurity, and Software Engineering roles instantly.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Free ATS Resume Score Checker | Arzoo Patodia">
+    <meta property="og:description" content="Calculate your resume ATS match score instantly. Get detailed feedback on technical keywords, formatting, action verbs, and quantifiable metrics.">
+    <meta property="og:image" content="https://arzoo-patodia.vercel.app/Profile_pic.png">
+
+    <!-- Favicon -->
+    <link rel="icon" href="Profile_pic.png" type="image/png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="service_styles.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- PDF.js via CDN for client-side PDF text extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- Icons (Lucide via CDN) -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="header-nav" role="banner">
+        <a href="/arzoo_patodia" class="back-btn" aria-label="Go back to portfolio homepage" id="back-to-home">
+            <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+        </a>
+    </header>
+
+    <!-- Page Content Container -->
+    <div class="service-container">
+        
+        <!-- LEFT COLUMN: ATS Calculator Tool & Results -->
+        <main class="main-column" role="main">
+            
+            <!-- Service Header -->
+            <section aria-labelledby="ats-main-title">
+                <h1 id="ats-main-title" class="service-title">Free ATS Resume Score Checker</h1>
+                <div class="badges-row">
+                    <span class="badge-tag">Instant Analysis</span>
+                    <span class="badge-tag">100% Free & Private</span>
+                    <span class="badge-tag">AI Powered</span>
+                </div>
+                <p class="about-text" style="margin-top: 1rem;">
+                    Checking your ATS match score before applying increases interview shortlists by up to 3x. Over 75% of resumes are filtered out by automated systems before reaching a hiring manager — test your resume below against target engineering roles.
+                </p>
+            </section>
+
+            <!-- Host Profile Snippet -->
+            <section class="host-profile" aria-label="Tool Host Profile">
+                <div class="host-avatar-wrapper">
+                    <img src="Profile_pic.png" alt="Arzoo Patodia" class="host-avatar">
+                </div>
+                <div class="host-details">
+                    <h2 class="host-name">Arzoo Patodia</h2>
+                    <p class="host-headline">Senior Cybersecurity Engineer @ Danfoss | Mentor for Cyber Laws</p>
+                </div>
+            </section>
+
+            <!-- ATS INPUT TOOL SECTION -->
+            <section class="detail-section ats-calculator-card" id="ats-input-card">
+                <h2 class="section-title"><i data-lucide="calculator" style="width:22px;height:22px;color:var(--clr-accent);margin-right:8px;"></i> Calculate Your ATS Match Score</h2>
+                
+                <!-- Role Selector -->
+                <div class="ats-form-group">
+                    <label for="ats-role-select" class="ats-label">Target Role / Industry Domain:</label>
+                    <select id="ats-role-select" class="ats-select">
+                        <option value="embedded_cybersecurity" selected>Embedded Cybersecurity / Automotive ECU (Danfoss, Bosch, Continental)</option>
+                        <option value="embedded_software">Embedded Software Engineer (AUTOSAR, C/C++, Microcontrollers)</option>
+                        <option value="cybersecurity_engineer">Cybersecurity Engineer / Analyst (Pentesting, SOC, SIEM)</option>
+                        <option value="software_engineer">Software Engineer / Fullstack (Python, React, Node, Cloud)</option>
+                        <option value="data_scientist">Data Scientist / AI Engineer (Python, ML, SQL)</option>
+                        <option value="custom">+ Compare Against Custom Job Description</option>
+                    </select>
+                </div>
+
+                <!-- Custom JD Field (Hidden by default) -->
+                <div class="ats-form-group" id="custom-jd-container" style="display:none;">
+                    <label for="custom-jd-input" class="ats-label">Paste Target Job Description (JD):</label>
+                    <textarea id="custom-jd-input" class="ats-textarea" rows="4" placeholder="Paste the job description requirements here to extract key terms..."></textarea>
+                </div>
+
+                <!-- Mode Tabs: Text vs File Upload -->
+                <div class="ats-mode-tabs">
+                    <button type="button" class="ats-mode-btn active" id="tab-btn-text">
+                        <i data-lucide="file-text" style="width:16px;height:16px;"></i> Paste Resume Text
+                    </button>
+                    <button type="button" class="ats-mode-btn" id="tab-btn-file">
+                        <i data-lucide="upload-cloud" style="width:16px;height:16px;"></i> Upload File (PDF/TXT)
+                    </button>
+                </div>
+
+                <!-- Text Area Input -->
+                <div id="input-area-text" class="ats-input-box">
+                    <textarea id="ats-resume-text" class="ats-textarea" rows="10" placeholder="Paste your full resume text here (Summary, Skills, Work Experience, Projects, Education)..."></textarea>
+                </div>
+
+                <!-- File Drag and Drop Input -->
+                <div id="input-area-file" class="ats-input-box" style="display:none;">
+                    <div class="ats-dropzone" id="ats-dropzone">
+                        <div class="ats-dropzone-icon">
+                            <i data-lucide="file-up" style="width:40px;height:40px;color:var(--clr-accent);"></i>
+                        </div>
+                        <div class="ats-dropzone-title">Drag & Drop your Resume PDF / TXT file here</div>
+                        <div class="ats-dropzone-sub">or click to browse from your computer</div>
+                        <input type="file" id="ats-file-input" accept=".pdf,.txt,.md" style="display:none;">
+                        <div id="ats-file-name" class="ats-file-name" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- Analyze Button -->
+                <button type="button" class="cta-btn ats-analyze-btn" id="ats-analyze-btn" style="margin-top: 1.5rem; width: 100%;">
+                    <i data-lucide="sparkles" style="width:20px;height:20px;"></i> Calculate ATS Score Now
+                </button>
+            </section>
+
+            <!-- SCANNING STATE (Animated progress indicator) -->
+            <div class="ats-scanning-card" id="ats-scanning-state" style="display:none;">
+                <div class="ats-spinner"></div>
+                <h3 class="ats-scan-title">Analyzing Resume Data...</h3>
+                <p id="ats-scan-status" class="ats-scan-status">Extracting text and identifying document structure...</p>
+                <div class="ats-progress-track">
+                    <div class="ats-progress-bar" id="ats-scan-progress-bar" style="width: 10%;"></div>
+                </div>
+            </div>
+
+            <!-- RESULTS CONTAINER -->
+            <div class="ats-results-wrapper" id="ats-results-container" style="display:none;">
+                
+                <!-- Overall Score Gauge Header -->
+                <section class="detail-section ats-score-header-card">
+                    <div class="ats-gauge-flex">
+                        
+                        <!-- SVG Radial Gauge -->
+                        <div class="ats-gauge-wrapper">
+                            <svg class="ats-gauge-svg" viewBox="0 0 100 100">
+                                <circle class="ats-gauge-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="ats-gauge-fill" id="ats-gauge-circle" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="ats-gauge-text">
+                                <span class="ats-score-num" id="ats-score-value">0</span>
+                                <span class="ats-score-denom">/100</span>
+                            </div>
+                        </div>
+
+                        <!-- Score Summary -->
+                        <div class="ats-score-info">
+                            <span id="ats-score-badge" class="ats-badge ats-badge--success">Analyzing...</span>
+                            <h2 class="ats-score-heading">Overall ATS Match Score</h2>
+                            <p class="ats-score-desc">
+                                Based on technical keyword density, action verb strength, section formatting, and quantifiable impact.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Category Score Breakdown -->
+                <section class="detail-section">
+                    <h2 class="section-title"><i data-lucide="bar-chart-3" style="width:20px;height:20px;color:var(--clr-accent);margin-right:8px;"></i> ATS Category Score Breakdown</h2>
+                    <div class="ats-breakdown-list">
+                        
+                        <!-- Factor 1: Keywords -->
+                        <div class="ats-factor-item">
+                            <div class="ats-factor-header">
+                                <span class="ats-factor-name"><i data-lucide="key" style="width:16px;height:16px;"></i> Keyword & Technical Skill Match (35%)</span>
+                                <span class="ats-factor-val" id="bar-keywords-val">0%</span>
+                            </div>
+                            <div class="ats-progress-track">
+                                <div class="ats-progress-bar" id="bar-keywords" style="width:0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Factor 2: Sections -->
+                        <div class="ats-factor-item">
+                            <div class="ats-factor-header">
+                                <span class="ats-factor-name"><i data-lucide="layout" style="width:16px;height:16px;"></i> Formatting & Section Completeness (20%)</span>
+                                <span class="ats-factor-val" id="bar-sections-val">0%</span>
+                            </div>
+                            <div class="ats-progress-track">
+                                <div class="ats-progress-bar" id="bar-sections" style="width:0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Factor 3: Action Verbs -->
+                        <div class="ats-factor-item">
+                            <div class="ats-factor-header">
+                                <span class="ats-factor-name"><i data-lucide="zap" style="width:16px;height:16px;"></i> Strong Action Verbs (20%)</span>
+                                <span class="ats-factor-val" id="bar-verbs-val">0%</span>
+                            </div>
+                            <div class="ats-progress-track">
+                                <div class="ats-progress-bar" id="bar-verbs" style="width:0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Factor 4: Metrics -->
+                        <div class="ats-factor-item">
+                            <div class="ats-factor-header">
+                                <span class="ats-factor-name"><i data-lucide="trending-up" style="width:16px;height:16px;"></i> Quantifiable Impact & Metrics (15%)</span>
+                                <span class="ats-factor-val" id="bar-metrics-val">0%</span>
+                            </div>
+                            <div class="ats-progress-track">
+                                <div class="ats-progress-bar" id="bar-metrics" style="width:0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Factor 5: Readability -->
+                        <div class="ats-factor-item">
+                            <div class="ats-factor-header">
+                                <span class="ats-factor-name"><i data-lucide="eye" style="width:16px;height:16px;"></i> Readability & Contact Details (10%)</span>
+                                <span class="ats-factor-val" id="bar-readability-val">0%</span>
+                            </div>
+                            <div class="ats-progress-track">
+                                <div class="ats-progress-bar" id="bar-readability" style="width:0%;"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Keywords Breakdown Section -->
+                <section class="detail-section">
+                    <h2 class="section-title"><i data-lucide="tags" style="width:20px;height:20px;color:var(--clr-accent);margin-right:8px;"></i> Keyword Analysis</h2>
+                    
+                    <div class="ats-kw-box">
+                        <h3 class="ats-kw-title text-success"><i data-lucide="check-circle" style="width:18px;height:18px;"></i> Found Target Keywords</h3>
+                        <div id="ats-found-keywords" class="ats-tags-container"></div>
+                    </div>
+
+                    <div class="ats-kw-box" style="margin-top:1.25rem;">
+                        <h3 class="ats-kw-title text-danger"><i data-lucide="alert-circle" style="width:18px;height:18px;"></i> Missing High-Impact Keywords (Click to copy)</h3>
+                        <div id="ats-missing-keywords" class="ats-tags-container"></div>
+                    </div>
+                </section>
+
+                <!-- Actionable Recommendations -->
+                <section class="detail-section">
+                    <h2 class="section-title"><i data-lucide="list-checks" style="width:20px;height:20px;color:var(--clr-accent);margin-right:8px;"></i> Personalized ATS Recommendations</h2>
+                    <div id="ats-recommendations-list" class="ats-recs-container"></div>
+                </section>
+
+            </div>
+
+        </main>
+
+        <!-- RIGHT COLUMN: Booking / Human Review Widget -->
+        <aside class="widget-column" role="complementary">
+            <div class="booking-widget">
+                
+                <div class="booking-header">
+                    <span class="booking-price-wrapper" style="font-size:0.85rem; color:var(--clr-accent); font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">
+                        Expert Human Feedback
+                    </span>
+                    <h3 style="font-size:1.25rem; font-weight:800; color:var(--clr-text-primary); margin-top:0.3rem;">1:1 Resume & CV Review</h3>
+                    <p style="font-size:0.88rem; color:var(--clr-text-secondary); margin-top:0.4rem;">
+                        Get personalized feedback on your resume directly from Arzoo Patodia (Senior Cybersecurity Engineer @ Danfoss).
+                    </p>
+                </div>
+
+                <ul class="benefit-list" style="margin: 1.5rem 0;">
+                    <li class="benefit-item">
+                        <i data-lucide="check-circle" class="benefit-icon" style="width:16px;height:16px;"></i>
+                        <span>Tailored automotive ECU & embedded domain framing</span>
+                    </li>
+                    <li class="benefit-item">
+                        <i data-lucide="check-circle" class="benefit-icon" style="width:16px;height:16px;"></i>
+                        <span>High-impact bullet point rewrite suggestions</span>
+                    </li>
+                    <li class="benefit-item">
+                        <i data-lucide="check-circle" class="benefit-icon" style="width:16px;height:16px;"></i>
+                        <span>Detailed PDF feedback report within 48 hrs</span>
+                    </li>
+                </ul>
+
+                <a href="/resume_overview" class="cta-btn" style="width:100%; text-align:center; justify-content:center;">
+                    <i data-lucide="file-text" style="width:18px;height:18px;"></i> Book 1:1 Resume Review (₹299)
+                </a>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer__text">
+            Made with <span class="footer__heart">♥</span> by Arzoo Patodia · © 2026
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="ats_script.js"></script>
+</body>
+</html>

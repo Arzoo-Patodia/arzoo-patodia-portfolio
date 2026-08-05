@@ -6,7 +6,8 @@
     { "source": "/resume_overview", "destination": "/resume_overview.html" },
     { "source": "/mock_interview", "destination": "/mock_interview.html" },
     { "source": "/career_counselling_service", "destination": "/career_counselling_service.html" },
-    { "source": "/project_guidance", "destination": "/project_guidance.html" }
+    { "source": "/project_guidance", "destination": "/project_guidance.html" },
+    { "source": "/ats_score_checker", "destination": "/ats_score_checker.html" }
   ],
   "headers": [
     {

@@ -13,6 +13,7 @@ ROUTES = {
     'mock_interview':            '/mock_interview.html',
     'career_counselling_service':'/career_counselling_service.html',
     'project_guidance':          '/project_guidance.html',
+    'ats_score_checker':         '/ats_score_checker.html',
 }
 
 class CustomHandler(http.server.SimpleHTTPRequestHandler):
