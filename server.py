@@ -6,7 +6,8 @@ PORT = 8000
 
 # Clean URL routes -> file mappings
 ROUTES = {
-    '':                          '/arzoo_patodia.html',   # root redirects to home
+    '':                          '/index.html',           # root redirects to home
+    'index':                     '/index.html',
     'arzoo_patodia':             '/arzoo_patodia.html',   # vanity URL (shareable link)
     'career_counselling':        '/arzoo_patodia.html',   # legacy home route
     'resume_overview':           '/resume_overview.html',

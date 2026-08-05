@@ -1,6 +1,7 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/arzoo_patodia.html" },
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/index", "destination": "/index.html" },
     { "source": "/arzoo_patodia", "destination": "/arzoo_patodia.html" },
     { "source": "/career_counselling", "destination": "/arzoo_patodia.html" },
     { "source": "/resume_overview", "destination": "/resume_overview.html" },
