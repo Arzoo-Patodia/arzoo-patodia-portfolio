@@ -216,6 +216,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedDate = new Date(2026, 6, bookingData.date);
         const dayName = daysOfWeek[selectedDate.getDay()];
         const dateStr = `${dayName}, July ${bookingData.date}, 2026`;
+        const meetUrl = 'https://meet.google.com/orz-patd-meet';
+        const dateNumStr = bookingData.date < 10 ? '0' + bookingData.date : '' + bookingData.date;
+        const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Project Guidance Session with Arzoo Patodia')}&dates=202607${dateNumStr}T100000Z/202607${dateNumStr}T104500Z&details=${encodeURIComponent('Google Meet Link: ' + meetUrl)}&location=${encodeURIComponent(meetUrl)}`;
+
         bookingSummary.innerHTML = `
             <div class="summary-row">
                 <i data-lucide="calendar"></i>
@@ -226,12 +230,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span><strong>Time:</strong> ${bookingData.time} (India Standard Time)</span>
             </div>
             <div class="summary-row">
-                <i data-lucide="video"></i>
-                <span><strong>Platform:</strong> Google Meet (Link sent to ${bookingData.email})</span>
-            </div>
-            <div class="summary-row">
                 <i data-lucide="user"></i>
-                <span><strong>Host:</strong> Arzoo Patodia</span>
+                <span><strong>Host:</strong> Arzoo Patodia (patodiaarzoo8@gmail.com)</span>
+            </div>
+            
+            <div class="meet-callout-card" style="margin-top:1.25rem; padding:1.25rem; background:#e6f4ea; border:1px solid #10b981; border-radius:12px; text-align:center;">
+                <h4 style="font-size:1rem; font-weight:800; color:#137333; margin-bottom:0.4rem;">
+                    <i data-lucide="video" style="width:18px;height:18px;vertical-align:middle;margin-right:4px;"></i>
+                    Your Google Meet Room Link:
+                </h4>
+                <p style="font-size:0.88rem; color:#1e3a29; margin-bottom:1rem;">
+                    Click below to join the video call directly or add it to your Google Calendar:
+                </p>
+
+                <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-bottom:1rem;">
+                    <a href="${meetUrl}" target="_blank" rel="noopener" class="cta-btn" style="background:#10b981; color:#ffffff; text-decoration:none; font-size:0.9rem; padding:0.65rem 1.25rem; display:inline-flex; align-items:center; gap:6px;">
+                        <i data-lucide="video" style="width:16px;height:16px;"></i> Join Google Meet Now
+                    </a>
+                    <button type="button" onclick="navigator.clipboard.writeText('${meetUrl}'); alert('Google Meet link copied to clipboard!');" style="padding:0.65rem 1rem; background:#ffffff; border:1px solid #10b981; color:#137333; border-radius:8px; font-size:0.9rem; font-weight:700; cursor:pointer;">
+                        Copy Link
+                    </button>
+                </div>
+
+                <a href="${gCalUrl}" target="_blank" rel="noopener" style="font-size:0.88rem; font-weight:700; color:#137333; text-decoration:underline; display:inline-flex; align-items:center; gap:4px;">
+                    <i data-lucide="calendar-plus" style="width:16px;height:16px;"></i> Add Session to Google Calendar
+                </a>
             </div>
         `;
         lucide.createIcons();
