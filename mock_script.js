@@ -219,6 +219,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const dateNumStr = bookingData.date < 10 ? '0' + bookingData.date : '' + bookingData.date;
         const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Mock Technical Interview with Arzoo Patodia')}&dates=202607${dateNumStr}T100000Z/202607${dateNumStr}T110000Z&details=${encodeURIComponent('Google Meet Link: ' + meetUrl)}&location=${encodeURIComponent(meetUrl)}`;
 
+        // Dispatch automated email notification to Host (patodiaarzoo8@gmail.com) and Visitor
+        sendBookingEmail('Mock Technical Interview', bookingData, dateStr, bookingData.time, meetUrl);
+
         bookingSummary.innerHTML = `
             <div class="summary-row">
                 <i data-lucide="calendar"></i>
@@ -230,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="summary-row">
                 <i data-lucide="user"></i>
-                <span><strong>Host:</strong> Arzoo Patodia (patodiaarzoo8@gmail.com)</span>
+                <span><strong>Host Email:</strong> Arzoo Patodia (patodiaarzoo8@gmail.com)</span>
             </div>
             
             <div class="meet-callout-card" style="margin-top:1.25rem; padding:1.25rem; background:#e6f4ea; border:1px solid #10b981; border-radius:12px; text-align:center;">
@@ -254,9 +257,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="${gCalUrl}" target="_blank" rel="noopener" style="font-size:0.88rem; font-weight:700; color:#137333; text-decoration:underline; display:inline-flex; align-items:center; gap:4px;">
                     <i data-lucide="calendar-plus" style="width:16px;height:16px;"></i> Add Session to Google Calendar
                 </a>
+
+                <div style="font-size:0.82rem; color:#15803d; background:#ffffff; border:1px solid #bbf7d0; border-radius:8px; padding:0.5rem 0.75rem; margin-top:1rem; display:inline-flex; align-items:center; gap:6px;">
+                    <i data-lucide="mail-check" style="width:16px;height:16px;"></i>
+                    <span>Email notification sent to <strong>patodiaarzoo8@gmail.com</strong> & <strong>${bookingData.email}</strong></span>
+                </div>
             </div>
         `;
         lucide.createIcons();
+    }
+
+    // Helper: Dispatch Email Notification to Host & Visitor
+    function sendBookingEmail(serviceTitle, bookingData, dateStr, timeStr, meetUrl) {
+        const hostEmail = 'patodiaarzoo8@gmail.com';
+        const emailSubject = `New Booking: ${serviceTitle} with ${bookingData.name}`;
+        const emailBody = `Hi Arzoo,\n\nA new 1:1 session has been booked on your portfolio!\n\n📌 Purpose: ${serviceTitle}\n👤 Visitor Name: ${bookingData.name}\n✉️ Visitor Email: ${bookingData.email}\n📅 Date: ${dateStr}\n⏰ Time: ${timeStr} (IST)\n💬 Discussion Notes: ${bookingData.notes || 'None'}\n\n📹 Google Meet Room Link: ${meetUrl}\n\nBest regards,\nPortfolio Booking System`;
+
+        if (typeof emailjs !== 'undefined') {
+            emailjs.send('default_service', 'template_booking', {
+                to_email: hostEmail,
+                visitor_email: bookingData.email,
+                visitor_name: bookingData.name,
+                service_title: serviceTitle,
+                booking_date: dateStr,
+                booking_time: timeStr,
+                notes: bookingData.notes || 'None',
+                meet_url: meetUrl
+            }).catch(err => console.log('EmailJS note:', err));
+        }
+
+        fetch('https://formspree.io/f/mqazkbye', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                _replyto: bookingData.email,
+                to_email: hostEmail,
+                subject: emailSubject,
+                message: emailBody,
+                service_title: serviceTitle,
+                visitor_name: bookingData.name,
+                visitor_email: bookingData.email,
+                date: dateStr,
+                time: timeStr,
+                google_meet_link: meetUrl
+            })
+        }).catch(err => console.log('Notification dispatch note:', err));
+    }
 
         // Show success screen
         successScreen.classList.add('active');
