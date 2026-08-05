@@ -370,6 +370,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <i data-lucide="mail-check" style="width:16px;height:16px;"></i>
                     <span>Email notification sent to <strong>patodiaarzoo8@gmail.com</strong> & <strong>${bookingData.email}</strong></span>
                 </div>
+            </div>
+        `;
+        lucide.createIcons();
+
         // Show success screen
         successScreen.classList.add('active');
 
