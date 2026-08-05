@@ -373,9 +373,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <i data-lucide="mail-check" style="width:16px;height:16px;"></i>
                     <span>Email notification sent to <strong>patodiaarzoo8@gmail.com</strong> & <strong>${bookingData.email}</strong></span>
                 </div>
-            </div>
-        `;
-        lucide.createIcons();
+        // Show success screen
+        successScreen.classList.add('active');
+
+        // Confetti explosion
+        launchConfetti();
     }
 
     // Helper: Dispatch Email Notification to Host & Visitor
@@ -412,15 +414,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 time: timeStr,
                 google_meet_link: meetUrl
             })
-        }).catch(err => console.log('Notification dispatch note:', err));
-    }
-        lucide.createIcons();
-
-        // Show success screen
-        successScreen.classList.add('active');
-
-        // Play premium confetti effect
-        launchConfetti();
     }
 
     // plain JS Confetti explosion
