@@ -17,11 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
         notes: ''
     };
 
-    // Calendar generation variables
-    const year = 2026;
-    const month = 6; // July (0-indexed in JS Dates)
-    const monthName = "July 2026";
+    // Dynamic Calendar Generation based on real current date
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth(); // 0-11
+    const today = now.getDate();
     
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June", 
+        "July", "August", "September", "October", "November", "December"
+    ];
+
     // Select DOM elements
     const calendarGrid = document.getElementById('calendar-grid');
     const monthTitle = document.getElementById('month-title');
@@ -34,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookingSummary = document.getElementById('booking-summary');
     const bookingForm = document.getElementById('booking-form');
 
-    // Render calendar title
-    monthTitle.textContent = monthName;
+    // Render dynamic calendar title
+    monthTitle.textContent = `${monthNames[month]} ${year}`;
 
     // Generate Calendar Grid
     // Day of the week names starting from Monday
@@ -50,13 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarGrid.appendChild(header);
     });
 
-    // Get first day of July 2026
+    // Get first day of current month
     // JS: Day 0 is Sunday, Day 1 is Monday... Day 6 is Saturday
     const firstDayIndex = new Date(year, month, 1).getDay();
     // Convert first day index so Monday is 0, Sunday is 6
     const adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
 
-    // Get number of days in July
+    // Get number of days in current month
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     // Fill in blank cells for previous month padding
@@ -66,9 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarGrid.appendChild(emptyCell);
     }
 
-    // Populate actual days of July 2026
-    const today = 11; // Local time says July 11, 2026
-    
+    // Populate actual days of current month
     for (let day = 1; day <= daysInMonth; day++) {
         const cell = document.createElement('div');
         cell.className = 'day-cell';
@@ -80,11 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Available logic: 
         // 1. Must be weekday (not Sat/Sun, i.e., 1-5)
-        // 2. Must be today or in the future (>= 11)
+        // 2. Must be today or in the future
         const isWeekday = dayOfWeek !== 0 && dayOfWeek !== 6;
-        const isFuture = day >= today;
+        const isFutureOrToday = day >= today;
 
-        if (isWeekday && isFuture) {
+        if (isWeekday && isFutureOrToday) {
             cell.classList.add('available');
             if (day === today) {
                 cell.classList.add('today');
@@ -217,12 +221,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render Summary
         const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const selectedDate = new Date(2026, 6, bookingData.date);
+        const selectedDate = new Date(year, month, bookingData.date);
         const dayName = daysOfWeek[selectedDate.getDay()];
-        const dateStr = `${dayName}, July ${bookingData.date}, 2026`;
+        const dateStr = `${dayName}, ${monthNames[month]} ${bookingData.date}, ${year}`;
         const meetUrl = 'https://meet.google.com/orz-patd-meet';
         const dateNumStr = bookingData.date < 10 ? '0' + bookingData.date : '' + bookingData.date;
-        const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('1:1 Resume Review with Arzoo Patodia')}&dates=202607${dateNumStr}T100000Z/202607${dateNumStr}T103000Z&details=${encodeURIComponent('Google Meet Link: ' + meetUrl)}&location=${encodeURIComponent(meetUrl)}`;
+        const monthNumStr = (month + 1) < 10 ? '0' + (month + 1) : '' + (month + 1);
+        const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('1:1 Resume Review with Arzoo Patodia')}&dates=${year}${monthNumStr}${dateNumStr}T100000Z/${year}${monthNumStr}${dateNumStr}T103000Z&details=${encodeURIComponent('Google Meet Link: ' + meetUrl)}&location=${encodeURIComponent(meetUrl)}`;
 
         // Dispatch automated email notification to Host (patodiaarzoo8@gmail.com) and Visitor
         sendBookingEmail('Resume / CV Review', bookingData, dateStr, bookingData.time, meetUrl);
