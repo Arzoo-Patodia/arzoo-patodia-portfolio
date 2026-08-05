@@ -18,11 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Dynamic Calendar Generation based on real current date
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth(); // 0-11
-    const today = now.getDate();
+    const realNow = new Date();
+    const realYear = realNow.getFullYear();
+    const realMonth = realNow.getMonth(); // 0-11
+    const realToday = realNow.getDate();
     
+    let activeYear = realYear;
+    let activeMonth = realMonth;
+
     const monthNames = [
         "January", "February", "March", "April", "May", "June", 
         "July", "August", "September", "October", "November", "December"
@@ -31,6 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Select DOM elements
     const calendarGrid = document.getElementById('calendar-grid');
     const monthTitle = document.getElementById('month-title');
+    const prevMonthBtn = document.getElementById('prev-month-btn');
+    const nextMonthBtn = document.getElementById('next-month-btn');
     const slotsSection = document.getElementById('slots-section');
     const slotsGrid = document.getElementById('slots-grid');
     const actionBtn = document.getElementById('action-btn');
@@ -40,63 +45,144 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookingSummary = document.getElementById('booking-summary');
     const bookingForm = document.getElementById('booking-form');
 
-    // Render dynamic calendar title
-    monthTitle.textContent = `${monthNames[month]} ${year}`;
-
-    // Generate Calendar Grid
-    const weekdays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-    
-    calendarGrid.innerHTML = '';
-    weekdays.forEach(day => {
-        const header = document.createElement('div');
-        header.className = 'weekday-header';
-        header.textContent = day;
-        calendarGrid.appendChild(header);
-    });
-
-    // Get first day of current month
-    const firstDayIndex = new Date(year, month, 1).getDay();
-    const adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
-
-    // Get number of days in current month
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    // Fill in blank cells for previous month padding
-    for (let i = 0; i < adjustedFirstDay; i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.className = 'day-cell';
-        calendarGrid.appendChild(emptyCell);
+    // Month Navigation Listeners
+    if (prevMonthBtn) {
+        prevMonthBtn.addEventListener('click', () => {
+            if (activeYear > realYear || (activeYear === realYear && activeMonth > realMonth)) {
+                activeMonth--;
+                if (activeMonth < 0) {
+                    activeMonth = 11;
+                    activeYear--;
+                }
+                renderCalendar(activeYear, activeMonth);
+            }
+        });
     }
 
-    // Populate actual days of current month
-    for (let day = 1; day <= daysInMonth; day++) {
-        const cell = document.createElement('div');
-        cell.className = 'day-cell';
-        cell.textContent = day;
+    if (nextMonthBtn) {
+        nextMonthBtn.addEventListener('click', () => {
+            activeMonth++;
+            if (activeMonth > 11) {
+                activeMonth = 0;
+                activeYear++;
+            }
+            renderCalendar(activeYear, activeMonth);
+        });
+    }
 
-        const curDate = new Date(year, month, day);
-        const dayOfWeek = curDate.getDay();
+    function renderCalendar(year, month) {
+        // Update Title
+        monthTitle.textContent = `${monthNames[month]} ${year}`;
 
-        const isWeekday = dayOfWeek !== 0 && dayOfWeek !== 6;
-        const isFutureOrToday = day >= today;
+        // Disable Prev Month if viewing current month
+        if (prevMonthBtn) {
+            const isCurrentMonth = (year === realYear && month === realMonth);
+            prevMonthBtn.disabled = isCurrentMonth;
+            prevMonthBtn.style.opacity = isCurrentMonth ? '0.3' : '1';
+            prevMonthBtn.style.cursor = isCurrentMonth ? 'not-allowed' : 'pointer';
+        }
 
-        if (isWeekday && isFutureOrToday) {
-            cell.classList.add('available');
-            if (day === today) {
-                cell.classList.add('today');
+        // Clear and build header
+        calendarGrid.innerHTML = '';
+        const weekdays = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+        weekdays.forEach(day => {
+            const header = document.createElement('div');
+            header.className = 'weekday-header';
+            header.textContent = day;
+            calendarGrid.appendChild(header);
+        });
+
+        // Get first day of month (Monday = 0 ... Sunday = 6)
+        const firstDayIndex = new Date(year, month, 1).getDay();
+        const adjustedFirstDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+
+        // Get number of days in month
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        // Previous month padding cells
+        for (let i = 0; i < adjustedFirstDay; i++) {
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'day-cell';
+            calendarGrid.appendChild(emptyCell);
+        }
+
+        // Days of current month
+        for (let day = 1; day <= daysInMonth; day++) {
+            const cell = document.createElement('div');
+            cell.className = 'day-cell';
+            cell.textContent = day;
+
+            // Check if day is today or in the future
+            let isFutureOrToday = false;
+            if (year > realYear) {
+                isFutureOrToday = true;
+            } else if (year === realYear && month > realMonth) {
+                isFutureOrToday = true;
+            } else if (year === realYear && month === realMonth && day >= realToday) {
+                isFutureOrToday = true;
+            }
+
+            if (isFutureOrToday) {
+                cell.classList.add('available');
+                if (year === realYear && month === realMonth && day === realToday) {
+                    cell.classList.add('today');
+                }
+                
+                cell.addEventListener('click', () => {
+                    document.querySelectorAll('.day-cell.selected').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    cell.classList.add('selected');
+                    selectDate(day);
+                });
             }
             
-            cell.addEventListener('click', () => {
-                document.querySelectorAll('.day-cell.selected').forEach(el => {
+            calendarGrid.appendChild(cell);
+        }
+    }
+
+    // Initial render
+    renderCalendar(activeYear, activeMonth);
+
+    // Available Time Slots
+    const availableSlots = [
+        "10:00 AM", "11:30 AM", "02:00 PM", "04:00 PM", "06:00 PM"
+    ];
+
+    // Handle Date Selection
+    function selectDate(day) {
+        bookingData.date = day;
+        bookingData.time = null;
+
+        // Render slots
+        slotsGrid.innerHTML = '';
+        availableSlots.forEach((slot, index) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'slot-btn';
+            btn.textContent = slot;
+            
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.slot-btn.selected').forEach(el => {
                     el.classList.remove('selected');
                 });
-                
-                cell.classList.add('selected');
-                selectDate(day);
+                btn.classList.add('selected');
+                selectTime(slot);
             });
-        }
-        
-        calendarGrid.appendChild(cell);
+
+            slotsGrid.appendChild(btn);
+
+            // Pre-select first time slot automatically for instant smooth UX
+            if (index === 0) {
+                btn.classList.add('selected');
+                selectTime(slot);
+            }
+        });
+
+        // Show slots section
+        slotsSection.classList.add('active');
+        slotsSection.style.display = 'block';
+        slotsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     // Available Time Slots for 60 mins interview (separated by 1h 30m to make realistic)
