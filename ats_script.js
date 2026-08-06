@@ -56,6 +56,161 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Pandas', 'NumPy', 'SQL', 'Scikit-learn', 'Data Analysis', 'NLP', 'Computer Vision', 
                 'Statistics', 'Data Visualization', 'Big Data', 'Jupyter', 'Feature Engineering'
             ]
+        },
+
+        // ── Automotive & Embedded ─────────────────────────────────
+        'automotive_systems': {
+            title: 'Automotive Systems Engineer',
+            keywords: [
+                'ASPICE', 'ISO 26262', 'V-Model', 'FMEA', 'DFMEA', 'Functional Safety', 'SIL',
+                'DOORS', 'Enterprise Architect', 'MATLAB', 'Simulink', 'HIL', 'MIL', 'SIL testing',
+                'System Architecture', 'Requirements Engineering', 'AUTOSAR', 'JIRA', 'Automotive SPICE',
+                'Traceability', 'Hazard Analysis', 'Risk Assessment', 'HARA', 'FTA', 'FMEDA'
+            ]
+        },
+        'iot_embedded_linux': {
+            title: 'IoT / Embedded Linux Engineer',
+            keywords: [
+                'Embedded Linux', 'Yocto', 'Buildroot', 'Python', 'C', 'C++', 'MQTT', 'Bluetooth',
+                'WiFi', 'IoT', 'Raspberry Pi', 'ARM', 'Device Tree', 'Kernel Modules', 'systemd',
+                'REST API', 'AWS IoT', 'Azure IoT', 'FreeRTOS', 'Bash', 'Git', 'Docker', 'OpenWRT'
+            ]
+        },
+        'hardware_pcb': {
+            title: 'Hardware Engineer / PCB Design',
+            keywords: [
+                'PCB Design', 'Altium', 'KiCAD', 'Eagle', 'Schematic', 'BOM', 'Signal Integrity',
+                'Power Integrity', 'EMC', 'EMI', 'Hardware Debugging', 'Oscilloscope', 'Multimeter',
+                'FPGA', 'Microcontroller', 'Hardware Testing', 'LTSpice', 'Circuit Design',
+                'Mixed Signal', 'High Speed Design', 'Layout', 'DFM', 'Gerber'
+            ]
+        },
+        'vlsi_semiconductor': {
+            title: 'VLSI / Semiconductor Engineer',
+            keywords: [
+                'VLSI', 'Verilog', 'VHDL', 'SystemVerilog', 'FPGA', 'RTL Design', 'Synthesis',
+                'Timing Analysis', 'DFT', 'ASIC', 'Physical Design', 'Simulation', 'ModelSim',
+                'Vivado', 'Digital Design', 'Signal Processing', 'UVM', 'Synopsys', 'Cadence',
+                'Verification', 'Place and Route', 'Static Timing Analysis', 'CMOS'
+            ]
+        },
+
+        // ── Cybersecurity ─────────────────────────────────────────
+        'cloud_security': {
+            title: 'Cloud Security Engineer',
+            keywords: [
+                'AWS', 'Azure', 'GCP', 'IAM', 'Cloud Security', 'Zero Trust', 'CSPM', 'SAST', 'DAST',
+                'Container Security', 'Kubernetes', 'Docker', 'Encryption', 'SOC 2', 'ISO 27001',
+                'Penetration Testing', 'OWASP', 'Terraform', 'Security Automation', 'CWPP',
+                'Cloud Compliance', 'VPC', 'Security Groups', 'Identity Federation', 'WAF'
+            ]
+        },
+        'network_security': {
+            title: 'Network Security / SOC Analyst',
+            keywords: [
+                'Network Security', 'Cisco', 'Firewall', 'IDS', 'IPS', 'VPN', 'SIEM', 'SOC',
+                'Incident Response', 'Wireshark', 'Splunk', 'QRadar', 'Threat Intelligence',
+                'Network Monitoring', 'TCP/IP', 'DNS', 'BGP', 'OSPF', 'Zero Trust', 'NAC',
+                'Vulnerability Scanning', 'Nessus', 'Nmap', 'SOAR', 'Log Analysis'
+            ]
+        },
+
+        // ── Software Engineering ──────────────────────────────────
+        'frontend_developer': {
+            title: 'Frontend Developer',
+            keywords: [
+                'HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Vue', 'Angular', 'Next.js',
+                'Responsive Design', 'UI/UX', 'Webpack', 'Vite', 'REST API', 'GraphQL',
+                'Performance Optimization', 'Accessibility', 'WCAG', 'Jest', 'Cypress', 'Git',
+                'Figma', 'CSS Grid', 'Flexbox', 'SASS', 'TailwindCSS', 'Web Vitals'
+            ]
+        },
+        'backend_developer': {
+            title: 'Backend Developer / API Engineer',
+            keywords: [
+                'Python', 'Java', 'Node.js', 'Spring Boot', 'Django', 'FastAPI', 'REST API',
+                'GraphQL', 'SQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Microservices', 'Authentication',
+                'OAuth', 'JWT', 'gRPC', 'Docker', 'Git', 'Message Queue', 'Kafka', 'RabbitMQ',
+                'API Design', 'System Design', 'Caching', 'Database Optimization'
+            ]
+        },
+        'devops_cloud': {
+            title: 'DevOps / Cloud Engineer',
+            keywords: [
+                'AWS', 'Azure', 'GCP', 'Docker', 'Kubernetes', 'CI/CD', 'Jenkins', 'GitHub Actions',
+                'Terraform', 'Ansible', 'Linux', 'Python', 'Bash', 'Monitoring', 'Prometheus',
+                'Grafana', 'Infrastructure as Code', 'Microservices', 'Helm', 'ArgoCD',
+                'Site Reliability', 'SRE', 'Deployment Automation', 'CloudFormation', 'EKS'
+            ]
+        },
+        'mobile_developer': {
+            title: 'Mobile App Developer',
+            keywords: [
+                'Android', 'iOS', 'Swift', 'Kotlin', 'React Native', 'Flutter', 'Jetpack Compose',
+                'SwiftUI', 'REST API', 'Firebase', 'Git', 'App Store', 'Play Store', 'Xcode',
+                'Android Studio', 'Dart', 'Unit Testing', 'UI Testing', 'Push Notifications',
+                'SQLite', 'Retrofit', 'Coroutines', 'MVVM', 'Clean Architecture'
+            ]
+        },
+        'qa_automation': {
+            title: 'QA / Test Automation Engineer',
+            keywords: [
+                'Selenium', 'Cypress', 'JUnit', 'pytest', 'TestNG', 'Automation Framework',
+                'Performance Testing', 'JMeter', 'API Testing', 'Postman', 'JIRA', 'Bug Tracking',
+                'Test Plans', 'Regression Testing', 'CI/CD', 'Agile', 'BDD', 'Cucumber',
+                'Robot Framework', 'Load Testing', 'Mobile Testing', 'Appium', 'Test Strategy'
+            ]
+        },
+
+        // ── Data & AI ─────────────────────────────────────────────
+        'ml_engineer': {
+            title: 'Machine Learning Engineer',
+            keywords: [
+                'Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'MLOps', 'Model Deployment',
+                'Feature Engineering', 'AWS SageMaker', 'Azure ML', 'Docker', 'Kubernetes',
+                'A/B Testing', 'Model Monitoring', 'Data Pipeline', 'Airflow', 'MLflow',
+                'Deep Learning', 'NLP', 'Computer Vision', 'Transformers', 'LLM', 'RAG'
+            ]
+        },
+        'bi_data_analyst': {
+            title: 'Business Intelligence / Data Analyst',
+            keywords: [
+                'SQL', 'Python', 'R', 'Power BI', 'Tableau', 'Excel', 'Data Visualization',
+                'ETL', 'Data Warehousing', 'Business Intelligence', 'Statistics', 'Dashboards',
+                'Reporting', 'Stakeholder Communication', 'SSRS', 'DAX', 'Snowflake', 'dbt',
+                'Google Analytics', 'Looker', 'KPI', 'Data Modeling', 'OLAP', 'A/B Testing'
+            ]
+        },
+
+        // ── Engineering & Design ──────────────────────────────────
+        'mechanical_engineer': {
+            title: 'Mechanical Design Engineer',
+            keywords: [
+                'SolidWorks', 'AutoCAD', 'CATIA', 'FEA', 'ANSYS', 'GD&T', 'DFM', 'Manufacturing',
+                'Materials Science', 'Thermal Analysis', 'Mechanical Design', 'BOM', 'Tolerance Analysis',
+                '3D Modeling', 'Simulation', 'Prototyping', 'PLM', 'FMEA', 'Quality Control',
+                'ISO 9001', 'Six Sigma', 'Lean Manufacturing', 'CFD', 'Stress Analysis'
+            ]
+        },
+        'electrical_engineer': {
+            title: 'Electrical Engineer',
+            keywords: [
+                'Power Systems', 'Circuit Design', 'MATLAB', 'Control Systems', 'PLC', 'SCADA',
+                'Electrical CAD', 'Protection Relay', 'Power Electronics', 'Motor Drives', 'PCB',
+                'Signal Processing', 'Substation', 'HMI', 'VFD', 'Instrumentation', 'IEC 61850',
+                'ETAP', 'AutoCAD Electrical', 'Load Flow', 'Short Circuit Analysis', 'IEEE'
+            ]
+        },
+
+        // ── Management & Business ─────────────────────────────────
+        'product_manager': {
+            title: 'Product Manager / Business Analyst',
+            keywords: [
+                'Product Roadmap', 'Agile', 'Scrum', 'Stakeholder Management', 'User Stories',
+                'Backlog', 'JIRA', 'Market Analysis', 'Product Strategy', 'A/B Testing', 'KPIs',
+                'Go-to-Market', 'Wireframes', 'PRD', 'Competitive Analysis', 'OKRs', 'Sprint Planning',
+                'Customer Discovery', 'Data-Driven', 'Figma', 'Confluence', 'SQL', 'Prioritization'
+            ]
         }
     };
 
