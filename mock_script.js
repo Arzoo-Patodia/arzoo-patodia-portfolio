@@ -41,9 +41,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const actionBtn = document.getElementById('action-btn');
     const dateSection = document.getElementById('date-section');
     const formSection = document.getElementById('form-section');
-    const successScreen = document.getElementById('success-screen');
+    const modalOverlay = document.getElementById('booking-modal-overlay');
     const bookingSummary = document.getElementById('booking-summary');
     const bookingForm = document.getElementById('booking-form');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalDoneBtn = document.getElementById('modal-done-btn');
+
+    // Modal close handlers
+    function closeModal() {
+        if (modalOverlay) modalOverlay.classList.remove('active');
+    }
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+    if (modalDoneBtn) modalDoneBtn.addEventListener('click', closeModal);
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
 
     // Month Navigation Listeners
     if (prevMonthBtn) {
@@ -280,13 +297,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render Summary
         const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const selectedDate = new Date(year, month, bookingData.date);
+        const selectedDate = new Date(activeYear, activeMonth, bookingData.date);
         const dayName = daysOfWeek[selectedDate.getDay()];
-        const dateStr = `${dayName}, ${monthNames[month]} ${bookingData.date}, ${year}`;
+        const dateStr = `${dayName}, ${monthNames[activeMonth]} ${bookingData.date}, ${activeYear}`;
         const meetUrl = 'https://meet.google.com/orz-patd-meet';
         const dateNumStr = bookingData.date < 10 ? '0' + bookingData.date : '' + bookingData.date;
-        const monthNumStr = (month + 1) < 10 ? '0' + (month + 1) : '' + (month + 1);
-        const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Mock Technical Interview with Arzoo Patodia')}&dates=${year}${monthNumStr}${dateNumStr}T100000Z/${year}${monthNumStr}${dateNumStr}T110000Z&details=${encodeURIComponent('Google Meet Link: ' + meetUrl)}&location=${encodeURIComponent(meetUrl)}`;
+        const monthNumStr = (activeMonth + 1) < 10 ? '0' + (activeMonth + 1) : '' + (activeMonth + 1);
+        const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Mock Technical Interview with Arzoo Patodia')}&dates=${activeYear}${monthNumStr}${dateNumStr}T100000Z/${activeYear}${monthNumStr}${dateNumStr}T110000Z&details=${encodeURIComponent('Google Meet Link: ' + meetUrl)}&location=${encodeURIComponent(meetUrl)}`;
 
         // Dispatch automated email notification to Host (patodiaarzoo8@gmail.com) and Visitor
         sendBookingEmail('Mock Technical Interview', bookingData, dateStr, bookingData.time, meetUrl);
@@ -335,8 +352,10 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         lucide.createIcons();
 
-        // Show success screen
-        successScreen.classList.add('active');
+        // Open the Booking Confirmation Modal
+        if (modalOverlay) {
+            modalOverlay.classList.add('active');
+        }
 
         // Confetti explosion
         launchConfetti();

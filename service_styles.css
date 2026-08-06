@@ -705,6 +705,223 @@ a {
 }
 
 /* ============================================================
+   BOOKING CONFIRMATION MODAL POPUP
+   ============================================================ */
+
+/* Overlay backdrop */
+.booking-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 30, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: overlayFadeIn 0.3s ease both;
+}
+
+.booking-modal-overlay.active {
+    display: flex;
+}
+
+/* Modal card */
+.booking-modal {
+    position: relative;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2.5rem 2rem 2rem;
+    max-width: 520px;
+    width: 100%;
+    box-shadow:
+        0 24px 80px rgba(108, 99, 255, 0.22),
+        0 8px 32px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    animation: modalSlideUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    overflow: hidden;
+}
+
+/* Gradient top bar */
+.booking-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #6c63ff, #db2777, #059669, #3b82f6);
+    background-size: 300% 100%;
+    animation: gradientShift 3s linear infinite;
+}
+
+/* Close button */
+.modal-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--clr-border);
+    background: var(--clr-bg);
+    color: var(--clr-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    z-index: 1;
+}
+
+.modal-close-btn:hover {
+    background: #fee2e2;
+    border-color: #ef4444;
+    color: #ef4444;
+    transform: rotate(90deg);
+}
+
+/* Success icon area */
+.modal-success-icon {
+    position: relative;
+    display: inline-flex;
+    margin-bottom: 1.25rem;
+}
+
+.modal-icon-ring {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e6f4ea 0%, #d1fae5 100%);
+    border: 3px solid #10b981;
+    color: #10b981;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.modal-icon-sparkles {
+    position: absolute;
+    inset: -8px;
+    pointer-events: none;
+}
+
+.sparkle {
+    position: absolute;
+    color: #fbbf24;
+    font-size: 1rem;
+    animation: sparklePop 0.6s ease both;
+}
+
+.sparkle.s1 { top: 0; left: 50%; transform: translateX(-50%); animation-delay: 0.3s; }
+.sparkle.s2 { bottom: 0; right: 0; animation-delay: 0.45s; }
+.sparkle.s3 { top: 50%; left: -4px; transform: translateY(-50%); animation-delay: 0.4s; color: #6c63ff; }
+
+/* Modal title & subtitle */
+.modal-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--clr-text-primary);
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+}
+
+.modal-subtitle {
+    font-size: 0.9rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Summary rows inside modal */
+.modal-summary {
+    background: var(--clr-bg);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Reuse .summary-row styles already defined */
+
+/* Modal action buttons */
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.modal-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 11px 22px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border: none;
+}
+
+.modal-btn-home {
+    background: var(--clr-accent);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.25);
+}
+
+.modal-btn-home:hover {
+    background: var(--clr-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(108, 99, 255, 0.35);
+}
+
+.modal-btn-close {
+    background: var(--clr-bg);
+    color: var(--clr-text-secondary);
+    border: 1px solid var(--clr-border) !important;
+}
+
+.modal-btn-close:hover {
+    border-color: var(--clr-accent) !important;
+    color: var(--clr-accent);
+    background: var(--clr-accent-soft);
+}
+
+/* New keyframes for modal */
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes popIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes sparklePop {
+    from { transform: scale(0) translateX(-50%); opacity: 0; }
+    to { transform: scale(1) translateX(-50%); opacity: 1; }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* ============================================================
    RESPONSIVE DESIGN
    ============================================================ */
 @media (max-width: 992px) {
