@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
         lucide.createIcons();
     }
 
+    // Initialize EmailJS
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('75rE5tllrTxk1fNla');
+    }
+
     // Booking state
     let bookingData = {
         date: null,
@@ -372,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 1. EmailJS API Call (if available)
         if (typeof emailjs !== 'undefined') {
-            emailjs.send('default_service', 'template_booking', {
+            emailjs.send('service_emailtriggering', 'template_lxznjud', {
                 to_email: hostEmail,
                 visitor_email: bookingData.email,
                 visitor_name: bookingData.name,

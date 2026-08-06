@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
         lucide.createIcons();
     }
 
+    // Initialize EmailJS
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('75rE5tllrTxk1fNla');
+    }
+
     // Booking state
     let bookingData = {
         date: null,
@@ -368,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const emailBody = `Hi Arzoo,\n\nA new 1:1 session has been booked on your portfolio!\n\n📌 Purpose: ${serviceTitle}\n👤 Visitor Name: ${bookingData.name}\n✉️ Visitor Email: ${bookingData.email}\n📅 Date: ${dateStr}\n⏰ Time: ${timeStr} (IST)\n💬 Discussion Notes: ${bookingData.notes || 'None'}\n\n📹 Google Meet Room Link: ${meetUrl}\n\nBest regards,\nPortfolio Booking System`;
 
         if (typeof emailjs !== 'undefined') {
-            emailjs.send('default_service', 'template_booking', {
+            emailjs.send('service_emailtriggering', 'template_lxznjud', {
                 to_email: hostEmail,
                 visitor_email: bookingData.email,
                 visitor_name: bookingData.name,
