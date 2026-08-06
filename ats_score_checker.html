@@ -153,10 +153,66 @@
                     </div>
                 </div>
 
-                <!-- Analyze Button -->
                 <button type="button" class="cta-btn ats-analyze-btn" id="ats-analyze-btn" style="margin-top: 1.5rem; width: 100%;">
                     <i data-lucide="sparkles" style="width:20px;height:20px;"></i> Calculate ATS Score Now
                 </button>
+            </section>
+
+            <!-- AI RESUME BULLET ENHANCER TOOL SECTION -->
+            <section class="detail-section ats-calculator-card" id="ats-bullet-enhancer-card" style="margin-top: 2rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+                    <h2 class="section-title" style="margin-bottom: 0;">
+                        <i data-lucide="wand-2" style="width:22px;height:22px;color:var(--clr-accent);margin-right:8px;"></i> AI Resume Bullet Point Enhancer
+                    </h2>
+                    <span class="badge-tag" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; font-weight:700;">
+                        ✨ Free AI Tool
+                    </span>
+                </div>
+                <p class="about-text" style="font-size: 0.88rem; margin-top: 0.5rem; color: var(--clr-text-secondary);">
+                    Transform weak or passive resume statements into high-impact, ATS-optimized bullet points formatted with Google's XYZ formula (<em>Action Verb + Context + Quantifiable Metric</em>).
+                </p>
+
+                <!-- Enhancer Input Controls -->
+                <div class="ats-form-group" style="margin-top: 1.2rem;">
+                    <label for="bullet-input" class="ats-label">Paste a weak or draft bullet point:</label>
+                    <textarea id="bullet-input" class="ats-textarea" rows="3" placeholder="e.g. Worked on CAN bus communication and fixed ECU diagnostic bugs in C..."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div class="ats-form-group" style="margin: 0;">
+                        <label for="bullet-domain-select" class="ats-label">Target Industry Domain:</label>
+                        <select id="bullet-domain-select" class="ats-select">
+                            <option value="embedded_cybersecurity" selected>Automotive / Embedded Security</option>
+                            <option value="embedded_software">Embedded Software Engineer</option>
+                            <option value="cybersecurity_engineer">Cybersecurity Engineer / SOC</option>
+                            <option value="software_engineer">Software / Fullstack Engineer</option>
+                            <option value="devops_cloud">DevOps / Cloud Engineer</option>
+                            <option value="data_scientist">Data Science & AI / ML</option>
+                            <option value="general">General Engineering & Management</option>
+                        </select>
+                    </div>
+
+                    <div class="ats-form-group" style="margin: 0;">
+                        <label for="bullet-style-select" class="ats-label">Enhancement Focus:</label>
+                        <select id="bullet-style-select" class="ats-select">
+                            <option value="metrics" selected>📊 High-Impact & Metrics (XYZ Pattern)</option>
+                            <option value="technical">🛠️ Deep Technical & Standards</option>
+                            <option value="leadership">👑 Ownership & Leadership</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="button" class="cta-btn" id="generate-bullet-btn" style="margin-top: 1.25rem; width: 100%; background: linear-gradient(135deg, #4f46e5, #7c3aed); border: none;">
+                    <i data-lucide="sparkles" style="width:20px;height:20px;"></i> Enhance Bullet Point Now
+                </button>
+
+                <!-- Enhancer Generated Output Container -->
+                <div id="bullet-output-container" style="display: none; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.25rem;">
+                    <span style="font-size: 0.85rem; font-weight: 700; color: var(--clr-accent); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.75rem;">
+                        ✨ Generated High-Impact Variants (Click to Copy):
+                    </span>
+                    <div id="bullet-results-list" style="display: flex; flex-direction: column; gap: 1rem;"></div>
+                </div>
             </section>
 
             <!-- SCANNING STATE (Animated progress indicator) -->

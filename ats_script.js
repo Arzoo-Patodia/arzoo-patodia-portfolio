@@ -716,4 +716,145 @@ document.addEventListener('DOMContentLoaded', () => {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
+    // ── AI RESUME BULLET ENHANCER ENGINE ─────────────────────────────────────
+    const generateBulletBtn = document.getElementById('generate-bullet-btn');
+    const bulletInput = document.getElementById('bullet-input');
+    const bulletDomainSelect = document.getElementById('bullet-domain-select');
+    const bulletStyleSelect = document.getElementById('bullet-style-select');
+    const bulletOutputContainer = document.getElementById('bullet-output-container');
+    const bulletResultsList = document.getElementById('bullet-results-list');
+
+    const ACTION_VERB_BANK = {
+        'metrics': ['Architected', 'Spearheaded', 'Optimized', 'Engineered', 'Accelerated', 'Streamlined', 'Enhanced', 'Decreased'],
+        'technical': ['Implemented', 'Configured', 'Integrated', 'Developed', 'Deployed', 'Refactored', 'Standardized', 'Validated'],
+        'leadership': ['Led', 'Directed', 'Orchestrated', 'Established', 'Pioneered', 'Drove', 'Championed', 'Mentored']
+    };
+
+    const DOMAIN_METRICS_TEMPLATES = {
+        'embedded_cybersecurity': [
+            '{verb} {core_phrase}, mitigating potential vulnerabilities across {num} ECU nodes while achieving ISO 21434 & SecOC compliance.',
+            '{verb} {core_phrase}, reducing diagnostic message latency by {pct}% and securing UDS bootloader authentication routines.',
+            'Engineered and integrated {core_phrase}, enhancing system fault tolerance and cutting cryptographic handshake overhead by {pct}%.'
+        ],
+        'embedded_software': [
+            '{verb} {core_phrase}, lowering RTOS task execution latency by {pct}% across MCU memory banks.',
+            '{verb} {core_phrase}, ensuring zero driver memory leaks and boosting peripheral throughput by {pct}%.',
+            'Designed and debugged {core_phrase}, reducing ROM memory footprint by {num} KB using MISRA C standards.'
+        ],
+        'cybersecurity_engineer': [
+            '{verb} {core_phrase}, mitigating high-risk security flaws and boosting SOC incident resolution speed by {pct}%.',
+            '{verb} {core_phrase}, hardening infrastructure access controls to pass SOC2/ISO 27001 audit with {pct}% compliance score.',
+            'Pioneered {core_phrase}, reducing automated vulnerability scan false positives by {pct}% across {num}+ servers.'
+        ],
+        'software_engineer': [
+            '{verb} {core_phrase}, improving REST API response times by {pct}% for over {num}K active daily users.',
+            '{verb} {core_phrase}, decreasing client-side render bottleneck by {pct}% and raising test coverage to {num}%.',
+            'Refactored and scaled {core_phrase}, reducing cloud compute infrastructure costs by ${num}K annually.'
+        ],
+        'devops_cloud': [
+            '{verb} {core_phrase}, shortening deployment pipeline time from {num} minutes down to {small_num} minutes.',
+            '{verb} {core_phrase}, raising cluster uptime to 99.99% and enabling zero-downtime microservice rollouts.',
+            'Automated {core_phrase}, cutting manual server provisioning overhead by {pct}% across {num}+ Kubernetes nodes.'
+        ],
+        'data_scientist': [
+            '{verb} {core_phrase}, raising predictive model accuracy by {pct}% while lowering inference latency by {num}ms.',
+            '{verb} {core_phrase}, automating ETL data pipeline ingestion for over {num}GB of daily streaming analytics.',
+            'Developed and deployed {core_phrase}, delivering actionable insights that boosted business conversion by {pct}%.'
+        ],
+        'general': [
+            '{verb} {core_phrase}, improving overall process efficiency by {pct}% and saving {num}+ engineering hours per month.',
+            '{verb} {core_phrase}, reducing error rates by {pct}% across cross-functional team workflows.',
+            'Spearheaded {core_phrase}, delivering project milestones {num} weeks ahead of schedule with zero defect backlog.'
+        ]
+    };
+
+    function cleanBulletText(text) {
+        if (!text) return '';
+        let cleaned = text.trim();
+        // Remove leading bullet characters or dashes
+        cleaned = cleaned.replace(/^[\s•\-\*\>]+/, '');
+        // Lowercase initial weak phrases
+        cleaned = cleaned.replace(/^(worked on|helped with|responsible for|in charge of|did|managed to|assisted in)\s+/i, '');
+        // Capitalize first letter
+        return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+    }
+
+    if (generateBulletBtn && bulletInput) {
+        generateBulletBtn.addEventListener('click', () => {
+            const rawInput = bulletInput.value.trim();
+            if (!rawInput) {
+                alert('Please paste a draft bullet point first!');
+                bulletInput.focus();
+                return;
+            }
+
+            const domain = bulletDomainSelect ? bulletDomainSelect.value : 'embedded_cybersecurity';
+            const style = bulletStyleSelect ? bulletStyleSelect.value : 'metrics';
+            const corePhrase = cleanBulletText(rawInput);
+
+            const verbs = ACTION_VERB_BANK[style] || ACTION_VERB_BANK['metrics'];
+            const templates = DOMAIN_METRICS_TEMPLATES[domain] || DOMAIN_METRICS_TEMPLATES['general'];
+
+            // Generate 3 variations
+            const variants = [
+                {
+                    badge: '📊 Google XYZ Pattern (Impact & Metric)',
+                    text: `${verbs[0]} ${corePhrase.toLowerCase()}, resulting in a 35% reduction in latency and saving 40+ engineering hours.`,
+                    tagColor: 'var(--clr-accent)'
+                },
+                {
+                    badge: '🛠️ Standard & Quality Focused',
+                    text: `${verbs[1]} ${corePhrase.toLowerCase()} in accordance with industry best practices, achieving 99.8% operational reliability.`,
+                    tagColor: '#10b981'
+                },
+                {
+                    badge: '👑 Executive / Scale Focused',
+                    text: `${verbs[2]} ${corePhrase.toLowerCase()}, optimizing resource utilization across 15+ production workflows.`,
+                    tagColor: '#8b5cf6'
+                }
+            ];
+
+            // Render Output Cards
+            bulletResultsList.innerHTML = variants.map((item, index) => `
+                <div class="bullet-result-card" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem 1.2rem; transition: all 0.2s ease;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: ${item.tagColor}; background: rgba(255,255,255,0.05); padding: 0.2rem 0.6rem; border-radius: 6px; border: 1px solid ${item.tagColor}33;">
+                            ${item.badge}
+                        </span>
+                        <button type="button" class="copy-bullet-btn" data-bullet-text="${item.text.replace(/"/g, '&quot;')}" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; border-radius: 6px; padding: 0.3rem 0.75rem; font-size: 0.78rem; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;">
+                            <i data-lucide="copy" style="width:14px;height:14px;"></i> Copy
+                        </button>
+                    </div>
+                    <p style="font-size: 0.92rem; color: #e2e8f0; line-height: 1.5; margin: 0; font-weight: 500;">
+                        • ${item.text}
+                    </p>
+                </div>
+            `).join('');
+
+            bulletOutputContainer.style.display = 'block';
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+
+            // Wire up copy buttons
+            document.querySelectorAll('.copy-bullet-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const textToCopy = btn.getAttribute('data-bullet-text');
+                    navigator.clipboard.writeText(`• ${textToCopy}`).then(() => {
+                        const originalHTML = btn.innerHTML;
+                        btn.innerHTML = `<i data-lucide="check" style="width:14px;height:14px;color:#10b981;"></i> Copied!`;
+                        btn.style.borderColor = '#10b981';
+                        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+                        setTimeout(() => {
+                            btn.innerHTML = originalHTML;
+                            btn.style.borderColor = 'rgba(255,255,255,0.15)';
+                            if (typeof lucide !== 'undefined') lucide.createIcons();
+                        }, 2000);
+                    });
+                });
+            });
+
+            // Smooth scroll to results
+            bulletOutputContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    }
 });
