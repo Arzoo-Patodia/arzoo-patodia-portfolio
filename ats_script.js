@@ -645,6 +645,61 @@ document.addEventListener('DOMContentLoaded', () => {
         updateBar('bar-metrics', analysis.metricScorePercent);
         updateBar('bar-readability', analysis.readabilityScorePercent);
 
+        // Render Detected & Missing Resume Sections
+        const detectedSecEl = document.getElementById('ats-detected-sections-list');
+        const missingSecEl = document.getElementById('ats-missing-sections-list');
+
+        if (detectedSecEl) {
+            if (analysis.detectedSections.length > 0) {
+                detectedSecEl.innerHTML = analysis.detectedSections.map(sec => 
+                    `<span class="ats-tag ats-tag--match"><i data-lucide="check" style="width:14px;height:14px;"></i> ${escapeHtml(sec)}</span>`
+                ).join('');
+            } else {
+                detectedSecEl.innerHTML = '<span class="text-muted" style="font-size:0.85rem;">No standard sections identified.</span>';
+            }
+        }
+
+        if (missingSecEl) {
+            if (analysis.missingSections.length > 0) {
+                missingSecEl.innerHTML = analysis.missingSections.map(sec => 
+                    `<span class="ats-tag ats-tag--missing"><i data-lucide="alert-circle" style="width:14px;height:14px;"></i> ${escapeHtml(sec)}</span>`
+                ).join('');
+            } else {
+                missingSecEl.innerHTML = '<span style="color:#10b981; font-size:0.85rem; font-weight:600;"><i data-lucide="check-circle" style="width:14px;height:14px;"></i> All essential sections present!</span>';
+            }
+        }
+
+        // Render Parser Health Matrix
+        const healthGridEl = document.getElementById('ats-parser-health-grid');
+        if (healthGridEl) {
+            healthGridEl.innerHTML = `
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.78rem; color: var(--clr-text-secondary);">Word Count</div>
+                    <div style="font-weight: 700; font-size: 0.95rem; margin-top: 2px; color: ${analysis.wordCount >= 300 && analysis.wordCount <= 1000 ? '#10b981' : '#f59e0b'};">
+                        ${analysis.wordCount} words (${analysis.wordCount >= 300 && analysis.wordCount <= 1000 ? 'Ideal' : 'Non-optimal'})
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.78rem; color: var(--clr-text-secondary);">Action Verbs Count</div>
+                    <div style="font-weight: 700; font-size: 0.95rem; margin-top: 2px; color: ${analysis.foundActionVerbsCount >= 5 ? '#10b981' : '#ef4444'};">
+                        ${analysis.foundActionVerbsCount} detected (${analysis.foundActionVerbsCount >= 5 ? 'Strong' : 'Weak'})
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.78rem; color: var(--clr-text-secondary);">Quantifiable Metrics</div>
+                    <div style="font-weight: 700; font-size: 0.95rem; margin-top: 2px; color: ${analysis.metricMatchesCount >= 3 ? '#10b981' : '#f59e0b'};">
+                        ${analysis.metricMatchesCount} metrics found (${analysis.metricMatchesCount >= 3 ? 'Good' : 'Needs More'})
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.78rem; color: var(--clr-text-secondary);">LinkedIn / Contact Link</div>
+                    <div style="font-weight: 700; font-size: 0.95rem; margin-top: 2px; color: ${analysis.hasLinkedIn ? '#10b981' : '#ef4444'};">
+                        ${analysis.hasLinkedIn ? 'Verified Present' : 'Missing Link'}
+                    </div>
+                </div>
+            `;
+        }
+
         // Render Found & Missing Keywords
         const foundContainer = document.getElementById('ats-found-keywords');
         const missingContainer = document.getElementById('ats-missing-keywords');
@@ -683,6 +738,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `).join('');
+        }
+
+        // Wire Export / Print Report Button
+        const exportBtn = document.getElementById('ats-export-report-btn');
+        if (exportBtn) {
+            exportBtn.onclick = () => {
+                window.print();
+            };
         }
 
         // Re-initialize icons in dynamically added elements
