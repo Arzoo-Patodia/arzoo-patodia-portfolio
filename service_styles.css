@@ -3,19 +3,19 @@
    ============================================================ */
 
 :root {
-    --clr-bg:             #faf9f7;
-    --clr-bg-card:        #ffffff;
-    --clr-text-primary:   #1a1a2e;
-    --clr-text-secondary: #555770;
-    --clr-text-muted:     #8e8ea0;
-    --clr-accent:         #6c63ff;
-    --clr-accent-hover:   #5a52d5;
-    --clr-accent-soft:    rgba(108, 99, 255, 0.08);
-    --clr-border:         #e8e8ef;
-    --clr-shadow:         rgba(108, 99, 255, 0.06);
-    --clr-shadow-hover:   0 12px 30px rgba(108, 99, 255, 0.12);
-    --clr-success:        #10b981;
-    --clr-success-bg:     #e6f4ea;
+    --clr-bg:             #0f172a; /* Deep Midnight */
+    --clr-bg-card:        #1e293b;
+    --clr-text-primary:   #f8fafc;
+    --clr-text-secondary: #94a3b8;
+    --clr-text-muted:     #64748b;
+    --clr-accent:         #6366f1; /* Cyber Indigo */
+    --clr-accent-hover:   #4f46e5;
+    --clr-accent-soft:    rgba(99, 102, 241, 0.15);
+    --clr-border:         rgba(255, 255, 255, 0.1);
+    --clr-shadow:         rgba(0, 0, 0, 0.4);
+    --clr-shadow-hover:   0 12px 30px rgba(99, 102, 241, 0.25);
+    --clr-success:        #10b981; /* Electric Teal */
+    --clr-success-bg:     rgba(16, 185, 129, 0.15);
     --clr-star:           #fbbf24;
 
     --font-family:        'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
