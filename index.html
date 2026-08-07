@@ -338,6 +338,53 @@
         </p>
     </footer>
 
+    <!-- Interactive Review Submission Modal -->
+    <div class="booking-modal-overlay" id="review-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="review-modal-title">
+        <div class="booking-modal" style="max-width: 500px; text-align: left;">
+            <button class="modal-close-btn" id="review-modal-close-btn" aria-label="Close review form">
+                <i data-lucide="x" style="width:18px;height:18px;"></i>
+            </button>
+            
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.3rem;">
+                <span style="font-size: 1.2rem;">✍️</span>
+                <h2 class="modal-title" id="review-modal-title" style="margin: 0; font-size: 1.25rem;">Write a Review</h2>
+            </div>
+            <p class="modal-subtitle" style="margin-bottom: 1.2rem; text-align: left;">Share your feedback or experience from your 1:1 session with Arzoo Patodia!</p>
+
+            <form id="review-submission-form" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="form-group">
+                    <label for="rev-name" class="form-label">Your Name <span>*</span></label>
+                    <input type="text" id="rev-name" class="form-input" placeholder="e.g. Siddharth Sharma" required autocomplete="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="rev-role" class="form-label">Role & Company / College <span>*</span></label>
+                    <input type="text" id="rev-role" class="form-input" placeholder="e.g. Embedded Engineer @ Bosch / Final Year Student" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rev-rating" class="form-label">Rating <span>*</span></label>
+                    <select id="rev-rating" class="ats-select" style="background: var(--clr-bg); color: var(--clr-text-primary); border: 1px solid var(--clr-border);">
+                        <option value="5" selected>⭐⭐⭐⭐⭐ (5 / 5 - Exceptional)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 / 5 - Great Session)</option>
+                        <option value="3">⭐⭐⭐ (3 / 5 - Good)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="rev-message" class="form-label">Your Feedback / Review <span>*</span></label>
+                    <textarea id="rev-message" class="form-input form-textarea" rows="4" placeholder="How did the session help you? Mention specific topics covered, interview guidance, or career takeaways..." required></textarea>
+                </div>
+
+                <button type="submit" class="action-btn" id="submit-review-btn" style="width: 100%; justify-content: center; margin-top: 0.5rem; background: linear-gradient(135deg, #10b981, #059669); border: none;">
+                    <i data-lucide="send" style="width:16px;height:16px;"></i> Post to Wall of Love
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
 </body>
 
